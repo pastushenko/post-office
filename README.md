@@ -1,6 +1,6 @@
 # Тестовое задание для php программиста
 
-> моё решение [здесь](97023ca5ac7f2d556c6b1fee72c88c76ae3d867b)
+> моё решение [здесь](https://github.com/artembeloglazov/postOffice/commit/97023ca5ac7f2d556c6b1fee72c88c76ae3d867b)
 
 ## Описание
 В небольшом городке N есть почтовое отделение.
