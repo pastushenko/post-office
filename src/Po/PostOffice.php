@@ -65,30 +65,21 @@ class PostOffice
     private function fillPostmen()
     {
         foreach($this->itemsQueue as $index => $item) {
-            switch ($item->getType()) {
-                case Letter::TYPE_ITEM:
-                    $postman = $this->postman;
-                    break;
-                case Wrapper::TYPE_ITEM:
-                    $postman = $this->biker;
-                    break;
-                case Package::TYPE_ITEM:
-                    $postman = $this->driver;
-                    break;
-                default:
-                    throw new \LogicException(
-                        sprintf(
-                            'Type "%s" not supported. Available types: "%s".',
-                            $item->getType(),
-                            implode('", "', [Letter::TYPE_ITEM, Wrapper::TYPE_ITEM, Package::TYPE_ITEM])
-                        )
-                    );
-            }
-
-            if(!$postman->isFull()) {
-                $postman->putItem($item);
-                unset($this->itemsQueue[$index]);
-            }
+        	if($postman = $this->getFirstAvailablePostman($item->getType())){
+               $postman->putItem($item);
+        	   unset($this->itemsQueue[$index]);
+        	}
         }
+    }
+    
+    private function getFirstAvailablePostman($itemType){
+    	foreach(array($this->postman, $this->biker, $this->driver) as $p){
+    		if(!$p->isFull($itemType)){
+    		    if(!$p->isFullByItemType($itemType)){
+    		    	return $p;
+    		    }
+    		}
+    	}
+    	return false;
     }
 }

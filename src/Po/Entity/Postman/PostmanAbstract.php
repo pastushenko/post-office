@@ -85,11 +85,34 @@ abstract class PostmanAbstract
         return $allItems;
     }
 
-    public function isFull()
+    public function isFull($itemType = false)
     {
-        return ($this->getCountItems() == $this->itemLimit);
+        return ($this->getCountItems() == $this->itemLimit); 
     }
 
+    public function isFullByItemType($itemType = false)
+    {
+    	switch ($itemType) {
+    		case Letter::TYPE_ITEM:
+    			if($this->letterLimit >= (count($this->letters) + 1)){
+    				return false;
+    			}
+    			break;
+    		case Wrapper::TYPE_ITEM:
+    			if($this->wrapperLimit >= (count($this->wrappers) + 1)){
+    				return false;
+    			}
+    			break;
+    		case Package::TYPE_ITEM:
+    			if($this->packageLimit >= (count($this->packages) + 1)){
+    				return false;
+    			}
+    			break;
+    	}
+    	return true;
+    }
+    
+    
     public function getCountItems()
     {
         return count($this->getAllItems());
